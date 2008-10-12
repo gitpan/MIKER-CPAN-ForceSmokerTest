@@ -3,6 +3,7 @@ use ExtUtils::MakeMaker;
 # the contents of the Makefile that is written.
 
 use Config;
+use Cwd;
 
 open (F,'>sconfig.h') or die "could not open sconfig.h for write";
 print F q|/* Written by Makefile.PL  |, scalar localtime(), q|
@@ -22,6 +23,8 @@ if (defined $Config{d_sysconf} && $Config{d_sysconf} eq 'define') {
 
 close F;
 
+my $pwd = getcwd();
+
 WriteMakefile(
 	'NAME'	 => 'MIKER::CPAN::ForceSmokerTest',
 	'VERSION_FROM' => 'ForceSmokerTest.pm', # finds $VERSION
@@ -38,7 +41,7 @@ config :: localStuff.h
 # siteconf CCname Cfile_ext OBJext EXEext "Cflags" "LDflags" "LDLOADLIBS"
 #
 localStuff.h :
-	./siteconf "$(CC)" ".c" "$(OBJ_EXT)" "$(EXE_EXT)" "$(CCFLAGS)" "$(LDFLAGS)" "$(LDLOADLIBS)"
+	|. $pwd .q|/siteconf "$(CC)" ".c" "$(OBJ_EXT)" "$(EXE_EXT)" "$(CCFLAGS)" "$(LDFLAGS)" "$(LDLOADLIBS)"
 
 |;
   my $inherited = shift->SUPER::top_targets(@_);

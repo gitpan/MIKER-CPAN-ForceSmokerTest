@@ -5,5 +5,9 @@ MANIFEST
 MANIFEST.SKIP
 Makefile.PL
 siteconf
-t/test0.t
+t/default_ns.t
+t/get_path.t
+t/page_size.t
+t/lchance.t
+t/get_ns.t
 META.yml                                 Module meta-data (added by MakeMaker)
